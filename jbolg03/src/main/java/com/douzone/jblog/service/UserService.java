@@ -12,6 +12,10 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	public boolean setUser(UserVo vo) {
+		return userRepository.insert(vo);
+	}
+	
 	public boolean getIdCheck(String id) {
 		
 		return userRepository.isId(id);

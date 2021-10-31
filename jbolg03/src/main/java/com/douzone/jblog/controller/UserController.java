@@ -15,13 +15,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.douzone.jblog.repository.UserRepository;
+import com.douzone.jblog.service.BlogService;
+import com.douzone.jblog.service.CategoryService;
+import com.douzone.jblog.service.UserService;
+import com.douzone.jblog.vo.BlogVo;
+import com.douzone.jblog.vo.CategoryVo;
 import com.douzone.jblog.vo.UserVo;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
+	
+	@Autowired
+	BlogService blogService;
+	
+	@Autowired
+	CategoryService categoryService;
 
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String join(@ModelAttribute UserVo vo) {
@@ -43,7 +54,19 @@ public class UserController {
 			return "user/join";
 		}
 		
-		userRepository.insert(vo);
+		userService.setUser(vo);
+		
+		BlogVo blogVo = new BlogVo();
+		blogVo.setId(vo.getId());
+		blogVo.setTitle(vo.getId());
+		blogVo.setLogo("none");
+		blogService.setBlogContent(blogVo);
+		
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setName("미분류");
+		categoryVo.setBlogId(vo.getId());
+		categoryService.setCategory(categoryVo);
+		
 		return "redirect:/user/joinsuccess";
 	}
 	
