@@ -1,5 +1,7 @@
 package com.douzone.jblog.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,5 +18,11 @@ public class CategoryRepository {
 		int count = sqlSession.insert("category.insert", vo);
 		
 		return count == 1; 
+	}
+	
+	public List<CategoryVo> getCategory(CategoryVo vo) {
+		List<CategoryVo> result = sqlSession.selectList("category.findById", vo);
+		
+		return result;
 	}
 }

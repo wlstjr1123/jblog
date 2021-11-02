@@ -6,4 +6,13 @@
 			insert into category values(null, #{name }, #{desc }, #{blogId });
 		]]>
 	</insert>
+	
+	<select id="findById" parameterType="categoryvo" resultType="categoryvo">
+		<![CDATA[
+			select no, name, `desc`
+				from category
+			where blog_id = #{name }
+		]]>
+		
+	</select>
 </mapper>

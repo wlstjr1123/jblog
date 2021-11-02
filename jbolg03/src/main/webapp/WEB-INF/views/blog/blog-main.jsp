@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div id="container">
-		<c:import url="/WEB-INF/views/includes/blog/header.jsp"></c:import>
+		<c:import url="/WEB-INF/views/includes/blog/header.jsp"/>
 		<div id="wrapper">
 			<div id="content">
 				<div class="blog-content">
@@ -42,6 +42,9 @@
 		<div id="navigation">
 			<h2>카테고리</h2>
 			<ul>
+				<%-- <c:forEach var="vo" items=${categotyVo }>
+					<li><a href="${pageContext.request.contextPath}/blog/${accessBlog }/">닥치고 스프링</a></li>
+				</c:forEach> --%>
 				<li><a href="">닥치고 스프링</a></li>
 				<li><a href="">스프링 스터디</a></li>
 				<li><a href="">스프링 프로젝트</a></li>
