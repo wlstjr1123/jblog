@@ -23,4 +23,9 @@ public class BlogRepository {
 		BlogVo blogVo = sqlSession.selectOne("blog.getContentById", vo);
 		return blogVo;
 	}
+	
+	public boolean update(BlogVo vo) {
+		int count = sqlSession.update("blog.update", vo);
+		return count == 1;
+	}
 }

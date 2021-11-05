@@ -35,20 +35,20 @@
 
 		<div id="extra">
 			<div class="blog-logo">
-				<img src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
+				<img src="${pageContext.request.contextPath}${blogVo.logo}">
 			</div>
 		</div>
 
 		<div id="navigation">
 			<h2>카테고리</h2>
 			<ul>
-				<%-- <c:forEach var="vo" items=${categotyVo }>
-					<li><a href="${pageContext.request.contextPath}/blog/${accessBlog }/">닥치고 스프링</a></li>
-				</c:forEach> --%>
-				<li><a href="">닥치고 스프링</a></li>
+				<c:forEach var="vo" items="${categoryVo }">
+					<li><a href="${pageContext.request.contextPath}/blog/${accessBlog }/">${vo.name }</a></li>
+				</c:forEach>
+		<!-- 		<li><a href="">닥치고 스프링</a></li>
 				<li><a href="">스프링 스터디</a></li>
 				<li><a href="">스프링 프로젝트</a></li>
-				<li><a href="">기타</a></li>
+				<li><a href="">기타</a></li> -->
 			</ul>
 		</div>
 		

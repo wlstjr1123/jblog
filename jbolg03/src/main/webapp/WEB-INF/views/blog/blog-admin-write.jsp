@@ -15,19 +15,20 @@
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
-					<li><a href="">기본설정</a></li>
-					<li><a href="">카테고리</a></li>
+					<li><a href="${pageContext.request.contextPath}/blog/admin/basic">기본설정</a></li>
+					<li><a href="${pageContext.request.contextPath }/blog/admin/category">카테고리</a></li>
 					<li class="selected">글작성</li>
 				</ul>
-				<form action="" method="post">
+				<form action="${pageContext.request.contextPath }/blog/admin/write" method="post">
 			      	<table class="admin-cat-write">
 			      		<tr>
 			      			<td class="t">제목</td>
 			      			<td>
 			      				<input type="text" size="60" name="title">
 				      			<select name="category">
-				      				<option>미분류</option>
-				      				<option>자바</option>
+				      				<c:forEach var="vo" items="${categoryVo }" varStatus="status">
+				      					<option value="${vo.no }">${vo.name }</option>
+				      				</c:forEach>
 				      			</select>
 				      		</td>
 			      		</tr>

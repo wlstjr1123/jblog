@@ -3,14 +3,16 @@ package com.douzone.jblog.interceptor;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.douzone.jblog.service.BlogService;
 import com.douzone.jblog.vo.BlogVo;
+import com.douzone.jblog.vo.UserVo;
 
-public class BlogInterceptor extends HandlerInterceptorAdapter{
+public class BlogAdminInterceptor extends HandlerInterceptorAdapter{
 
 	@Autowired
 	BlogService blogService;
@@ -21,16 +23,13 @@ public class BlogInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		String id = request.getParameter("id");
+		HttpSession session = request.getSession();
 		
-		BlogVo vo = new BlogVo();
-		vo.setId(id);
-		BlogVo result = blogService.getBlogContent(vo);
+		UserVo userVo = (UserVo) session.getAttribute("authUser");
 		
-		BlogVo scBlogVo = (BlogVo) servletContext.getAttribute("blogVo");
-		
-		if (scBlogVo == null || scBlogVo.getId() != id) {
-			servletContext.setAttribute("blogVo", result);
+		if (userVo == null) {
+			response.sendRedirect(request.getContextPath());
+			return false;
 		}
 		
 		
