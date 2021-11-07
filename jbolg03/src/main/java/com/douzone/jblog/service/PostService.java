@@ -25,4 +25,9 @@ public class PostService {
 	public List<PostVo> select(PostVo vo) {
 		return postRepository.select(vo);
 	}
+	
+	public PostVo selectOne(PostVo vo) {
+		return postRepository.selectOne(vo);
+	}
+	
 }

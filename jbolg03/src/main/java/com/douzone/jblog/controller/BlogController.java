@@ -38,7 +38,7 @@ public class BlogController {
 	@Autowired
 	ServletContext servletContext;
 	
-	@RequestMapping({ "/{id}", "/{id}/{category}", "/{id}/{catefory}/{item}" })
+	@RequestMapping({ "/{id}", "/{id}/{category}", "/{id}/{category}/{item}" })
 	public String main(
 			@PathVariable("id") String id, 
 			@PathVariable("category") Optional<String> category,
@@ -59,28 +59,30 @@ public class BlogController {
 			return "/blog/blog-main";
 		}
 		
-//		category.orElse(resultCategoryVo.get(0).getNo() + "");
-//		
-//		PostVo selectPostVo = new PostVo();
-//		selectPostVo.setCategoryNo(Long.parseLong(category.get()));
-//		List<PostVo> postVoList = postService.select(selectPostVo);
-//		model.addAttribute("postList", postVoList);
-//		
-//		if (postVoList == null || postVoList.size() == 0) {
-//			return "/blog/blog-main";
-//		}
-//		
-//		item.orElse(postVoList.get(0).getNo() + "");
+		PostVo selectPostVo = new PostVo();
+		selectPostVo.setCategoryNo(Long.parseLong(category.orElse(resultCategoryVo.get(0).getNo() + "")));
+		List<PostVo> postVoList = postService.select(selectPostVo);
+		model.addAttribute("postList", postVoList);
+		
+		if (postVoList == null || postVoList.size() == 0) {
+			return "/blog/blog-main";
+		}
+		
+		PostVo postItem = new PostVo();
+		postItem.setNo(Long.parseLong(item.orElse(postVoList.get(0).getNo() + "")));
+		model.addAttribute("postItem", postService.selectOne(postItem));
+		
+		model.addAttribute("accessBlog", id);
 		
 		return "/blog/blog-main";
 	}
 	
-	@RequestMapping(value = "/admin/basic", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/basic/{id}", method = RequestMethod.GET)
 	public String adminBasic() {
 		return "/blog/blog-admin-basic";
 	}
 
-	@RequestMapping(value = "/admin/basic", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/basic/{id}", method = RequestMethod.POST)
 	public String adminBasic(@AuthUser UserVo authUser, 
 			@RequestParam("file") MultipartFile file,
 			@RequestParam(value="title", required = true, defaultValue = "") String title) {
@@ -93,7 +95,7 @@ public class BlogController {
 		return "redirect:/blog/" + authUser.getId();
 	}
 	
-	@RequestMapping(value = "/admin/category", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/category/{id}", method = RequestMethod.GET)
 	public String adminCategory(@AuthUser UserVo authUser, Model model) {
 		
 		List<CategoryVo> vo = categoryService.getCategory(authUser);
@@ -103,7 +105,7 @@ public class BlogController {
 		return "/blog/blog-admin-category";
 	}
 	
-	@RequestMapping(value = "/admin/category/delete/{name}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/category/delete/{name}/{id}", method = RequestMethod.GET)
 	public String adminCategoryDelete(@AuthUser UserVo authUser,
 			@PathVariable("name") String name) {
 		
@@ -114,10 +116,10 @@ public class BlogController {
 		CategoryVo categoryNoVo = categoryService.findNoByIdAndName(vo);
 		postService.delete(categoryNoVo.getNo());
 		categoryService.delete(vo);
-		return "redirect:/blog/admin/category";
+		return "redirect:/blog/admin/category/" + authUser.getId();
 	}
 	
-	@RequestMapping(value = "/admin/write", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/write//{id}", method = RequestMethod.GET)
 	public String adminWrite(@AuthUser UserVo authUser, Model model) {
 		List<CategoryVo> vo = categoryService.getCategory(authUser);
 		model.addAttribute("categoryVo", vo);
@@ -125,7 +127,7 @@ public class BlogController {
 		return "/blog/blog-admin-write";
 	}
 	
-	@RequestMapping(value = "/admin/write", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/write/{id}", method = RequestMethod.POST)
 	public String adminWrite(@AuthUser UserVo authUser,
 			@RequestParam("title") String title,
 			@RequestParam("content") String content,

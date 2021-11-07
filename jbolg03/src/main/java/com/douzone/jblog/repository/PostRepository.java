@@ -27,4 +27,8 @@ public class PostRepository {
 	public List<PostVo> select(PostVo vo) {
 		return sqlSession.selectList("post.select", vo);
 	}
+	
+	public PostVo selectOne(PostVo vo) {
+		return sqlSession.selectOne("post.selectOne", vo);
+	}
 }

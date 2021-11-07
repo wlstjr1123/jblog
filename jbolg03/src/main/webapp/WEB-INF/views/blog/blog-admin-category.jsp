@@ -52,9 +52,9 @@
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
-					<li><a href="${pageContext.request.contextPath}/blog/admin/basic">기본설정</a></li>
+					<li><a href="${pageContext.request.contextPath}/blog/admin/basic/${authUser.id}">기본설정</a></li>
 					<li class="selected">카테고리</li>
-					<li><a href="${pageContext.request.contextPath }/blog/admin/write">글작성</a></li>
+					<li><a href="${pageContext.request.contextPath }/blog/admin/write/${authUser.id}">글작성</a></li>
 				</ul>
 		      	<table id="admin-cat" class="admin-cat">
 		      		<tr>
@@ -70,7 +70,7 @@
 							<td>${vo.name }</td>
 							<td>${vo.count }</td>
 							<td>${vo.desc }</td>
-							<td><a href="${pageContext.request.contextPath}/blog/admin/category/delete/${vo.name }"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
+							<td><a href="${pageContext.request.contextPath}/blog/admin/category/delete/${vo.name }/${authUser.id}"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
 						</tr>
 					</c:forEach>
 				</table>
