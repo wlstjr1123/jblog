@@ -11,12 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.douzone.jblog.exception.BlogServiceException;
 import com.douzone.jblog.repository.BlogRepository;
+import com.douzone.jblog.repository.UserRepository;
 import com.douzone.jblog.vo.BlogVo;
 import com.douzone.web.util.ImageUtil;
 
 @Service
 public class BlogService {
-	private static String SAVE_PATH = "/upload-images/jblog03/admin";
+	private static String SAVE_PATH = "/upload-images/jblog04/admin";
 	private static String URL_BASE = "/admin/images";	
 	
 	@Autowired

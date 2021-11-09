@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="category">
+	<insert id="insert" parameterType="categoryvo">
+		<![CDATA[
+			insert into category values(null, #{name }, #{desc }, #{blogId });
+		]]>
+	</insert>
+	
+	<select id="findById" parameterType="uservo" resultType="categoryvo">
+		<![CDATA[
+			select c.no, c.name, c.`desc`, count(title) as count
+				from category c left join post p on c.no = p.category_no
+			where blog_id = #{id }
+			group by c.name
+		]]>
+		
+	</select>
+	
+	<select id="findNoByIdAndName" parameterType="categoryvo" resultType="categoryvo">
+		<![CDATA[
+			select no
+				from category
+				where blog_id = #{blogId } and name = #{name };
+		]]>
+	</select>
+	
+	<select id="overlapCheck" parameterType="categoryvo" resultType="int">
+		<![CDATA[
+			select count(*)
+				from category
+			where blog_id = #{blogId}
+				and name = #{name};
+		]]>
+	</select>
+	
+	<delete id="delete" parameterType="categoryvo">
+		<![CDATA[
+			delete from category
+			where blog_id = #{blogId }
+				and name = #{name }
+		]]>
+	</delete>
+</mapper>
