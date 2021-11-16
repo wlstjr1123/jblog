@@ -49,6 +49,7 @@ public class BlogController {
 		vo.setId(id);
 		BlogVo result = blogService.getBlogContent(vo);
 		model.addAttribute("blogVo", result);
+		model.addAttribute("accessBlog", id);
 
 		UserVo userVo = new UserVo();
 		userVo.setId(id);
@@ -72,8 +73,6 @@ public class BlogController {
 		PostVo postItem = new PostVo();
 		postItem.setNo(Long.parseLong(item.orElse(postVoList.get(0).getNo() + "")));
 		model.addAttribute("postItem", postService.selectOne(postItem));
-		
-		model.addAttribute("accessBlog", id);
 		
 		return "/blog/blog-main";
 	}
