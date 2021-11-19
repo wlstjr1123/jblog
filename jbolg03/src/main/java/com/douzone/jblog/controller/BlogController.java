@@ -78,7 +78,14 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value = "/admin/basic/{id}", method = RequestMethod.GET)
-	public String adminBasic() {
+	public String adminBasic(@PathVariable("id") String id, Model model) {
+		BlogVo vo = new BlogVo();
+		vo.setId(id);
+		
+		BlogVo result = blogService.getBlogContent(vo);
+		
+		model.addAttribute("blogVo", blogService.getBlogContent(vo));
+		
 		return "/blog/blog-admin-basic";
 	}
 
